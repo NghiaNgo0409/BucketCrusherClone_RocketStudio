@@ -19,14 +19,17 @@ public class IKManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GetDistance(endJoint.transform.position, target.transform.position) > threshold)
+        for(int i = 0; i < 20; i++)
         {
-            Joints currentJoint = startJoint;
-            while(currentJoint != null)
+            if (GetDistance(endJoint.transform.position, target.transform.position) > threshold)
             {
-                float slope = CalculateSlope(currentJoint);
-                currentJoint.Rotate(-slope * rate);
-                currentJoint = currentJoint.GetChildJoint();
+                Joints currentJoint = startJoint;
+                while (currentJoint != null)
+                {
+                    float slope = CalculateSlope(currentJoint);
+                    currentJoint.Rotate(-slope * rate);
+                    currentJoint = currentJoint.GetChildJoint();
+                }
             }
         }
     }
