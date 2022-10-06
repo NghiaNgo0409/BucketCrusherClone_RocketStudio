@@ -21,8 +21,13 @@ public class IKManager : MonoBehaviour
     {
         if(GetDistance(endJoint.transform.position, target.transform.position) > threshold)
         {
-            float slope = CalculateSlope(startJoint);
-            startJoint.Rotate(-slope * rate);
+            Joints currentJoint = startJoint;
+            while(currentJoint != null)
+            {
+                float slope = CalculateSlope(currentJoint);
+                currentJoint.Rotate(-slope * rate);
+                currentJoint = currentJoint.GetChildJoint();
+            }
         }
     }
 

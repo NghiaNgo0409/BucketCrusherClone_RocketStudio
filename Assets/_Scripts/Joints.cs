@@ -17,7 +17,7 @@ public class Joints : MonoBehaviour
         
     }
 
-    public Joints GetJoint()
+    public Joints GetChildJoint()
     {
         return childJoint;
     }
