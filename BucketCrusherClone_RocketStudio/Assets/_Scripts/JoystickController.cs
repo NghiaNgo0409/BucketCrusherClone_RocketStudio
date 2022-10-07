@@ -30,6 +30,11 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (GameManager.Instance.IsWin())
+        {
+            isSawBladeSpin = false;
+            return;
+        }
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
             virtualJoystickBG.rectTransform,
             eventData.position,
@@ -63,7 +68,7 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
     {
         dragInput = Vector2.zero;
         virtualJoystick.rectTransform.anchoredPosition = Vector2.zero;
-        isSawBladeSpin = true;
+        isSawBladeSpin = false;
     }
 
     public float InputHorizontal()
@@ -74,5 +79,10 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
     public float InputVertical()
     {
         return dragInput.y;
+    }
+
+    public bool IsSawBladeSpin()
+    {
+        return isSawBladeSpin;
     }
 }

@@ -7,19 +7,35 @@ public class IKManager : MonoBehaviour
     [SerializeField] Joints startJoint;
     [SerializeField] Joints endJoint;
     [SerializeField] GameObject target;
-    [SerializeField] float rate = 5f;
+    int loopSpeed;
+    float rate;
+    [SerializeField] SawBreaker saw;
+    [SerializeField] JoystickController joystickController;
 
     float threshold = 0.05f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        loopSpeed = 15;
+        rate = .25f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        for(int i = 0; i < 20; i++)
+        if (!joystickController.IsSawBladeSpin()) return;
+        if (GameManager.Instance.IsWin()) return;
+        if (saw.IsCrushing())
+        {
+            loopSpeed = 11;
+            rate = .095f;
+        }
+        else
+        {
+            loopSpeed = 15;
+            rate = .25f;
+        }
+        for (int i = 0; i < loopSpeed; i++)
         {
             if (GetDistance(endJoint.transform.position, target.transform.position) > threshold)
             {
