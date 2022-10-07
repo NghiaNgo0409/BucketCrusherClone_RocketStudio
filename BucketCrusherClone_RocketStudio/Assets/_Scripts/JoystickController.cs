@@ -8,8 +8,12 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
 {
     [SerializeField] Image virtualJoystickBG;
     [SerializeField] Image virtualJoystick;
+    [SerializeField] Transform sawBlade;
+
+    [SerializeField] float rotateSpeed;
 
     Vector2 dragInput;
+    bool isSawBladeSpin;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +24,8 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
     // Update is called once per frame
     void Update()
     {
-        
+        if(isSawBladeSpin) 
+            sawBlade.Rotate(0, Time.deltaTime * rotateSpeed, 0);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -51,12 +56,14 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
+        isSawBladeSpin = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         dragInput = Vector2.zero;
         virtualJoystick.rectTransform.anchoredPosition = Vector2.zero;
+        isSawBladeSpin = true;
     }
 
     public float InputHorizontal()
